@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator View</title>
+	<meta charset="utf-8" />
+
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" href="Content/bootstrap.min.css"/>
+    <script src="Scripts/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+    <div style="max-width:500px;margin:0 auto;padding-top:150px;">
+
+        <div class="row" style="margin-bottom:30px;">
+            <div class="col-xs-12">
+                <p>Please enter two integers and click the "ADD" button to perform addition.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <span>Number 1</span>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input type="text" id="param1" />
+                    </div>
+                    <div class="col-xs-12">
+                        <span id="param1Error" style="color:red;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px;">
+            <div class="col-xs-12 col-sm-6">
+                <span>Number 2</span>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input type="text" id="param2" />
+                    </div>
+                    <div class="col-xs-12">
+                        <span id="param2Error" style="color:red;"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:30px;">
+            <div class="col-xs-12 col-sm-6">
+                <button onclick="calculatorAdd()">ADD</button>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <span id="additionResult"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="max-width:500px;margin:0 auto;padding-top:150px;">
+
+        <div class="row" style="margin-bottom:30px;">
+            <div class="col-xs-12">
+                <span>Click button to view the log : </span>
+                <button onclick="getLog()">Logs</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+            <div class="col-xs-12">
+                <div id="logData"></div>
+            </div>
+        </div>
+
+    </div>
+    
+
+    <script>
+
+    function calculatorAdd() {
+        var val1 = $('#param1').val();
+        var val2 = $('#param2').val();
+        $.post('api/calculator/add', { param1: val1, param2: val2 })
+            .done(function (data) {
+                document.getElementById('additionResult').innerHTML = "";
+                document.getElementById('param1Error').innerHTML = "";
+                document.getElementById('param2Error').innerHTML = "";
+                if (data.Result) {
+                    $('#additionResult').text(data.Result);
+                } else if (data.Error) {
+                    $('#additionResult').text(data.Error);
+                    if (!data.Param1Valid) {
+                        $('#param1Error').text('Invalid value');
+                    }
+                    if (!data.Param2Valid) {
+                        $('#param2Error').text('Invalid value');
+                    }
+                } else {
+                    $('#additionResult').text('No sum result or error returned');
+                }
+                
+            })
+            .fail(function (jqXHR, textStatus, err) {
+                $('#additionResult').text(err + ': ' + jqXHR.responseText);
+            });
+    }
+
+    function getLog() {
+        $.getJSON('api/log/read')
+          .done(function (data) {
+              console.log(data);
+
+              var list = document.createElement('ul');
+              for (var i = 0; i < data.LogEntries.length; i++) {
+                  var item = document.createElement('li');
+                  var logEntryObj = data.LogEntries[i];
+                  item.appendChild(document.createTextNode(logEntryObj.Timestamp + ', ' + logEntryObj.FirstParameter + ', ' + logEntryObj.SecondParameter + ', ' + logEntryObj.Result));
+                  list.appendChild(item);
+              }
+              document.getElementById('logData').innerHTML = "";
+              document.getElementById('logData').appendChild(list);
+          })
+          .fail(function (jqXHR, textStatus, err) {
+              $('#additionResult').text('Error: ' + err);
+          });
+    }
+
+    function getLog2() {
+        $.getJSON('api/log/read')
+          .done(function (data) {
+              console.log(data);
+              document.getElementById('logData').innerHTML = "";
+              var tr = document.createElement('tr');
+              for (var i = 0; i < data.LogEntries.length; i++) {
+                  var logEntryObj = data.LogEntries[i];
+                  var td1 = document.createElement('td');
+                  td1.appendChild(document.createTextNode(logEntryObj.Timestamp));
+                  tr.appendChild(td1);
+                  var td2 = document.createElement('td');
+                  td2.appendChild(document.createTextNode(logEntryObj.FirstParameter));
+                  tr.appendChild(td2);
+                  var td3 = document.createElement('td');
+                  td3.appendChild(document.createTextNode(logEntryObj.SecondParameter));
+                  tr.appendChild(td3);
+                  var td4 = document.createElement('td');
+                  td4.appendChild(document.createTextNode(logEntryObj.Result));
+                  tr.appendChild(td4);
+                  document.getElementById('logData').appendChild(tr);
+              }
+          })
+          .fail(function (jqXHR, textStatus, err) {
+              $('#additionResult').text('Error: ' + err);
+          });
+    }
+
+    </script>
+
+</body>
+</html>

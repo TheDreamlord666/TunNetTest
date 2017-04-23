@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TunNet", "TunNet\TunNet.csproj", "{C81FFEE5-C061-424B-8693-61BF3039FD33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TunNet.Tests", "TunNet.Tests\TunNet.Tests.csproj", "{729DEE09-21D7-4B61-9594-D3B263F87FD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C81FFEE5-C061-424B-8693-61BF3039FD33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C81FFEE5-C061-424B-8693-61BF3039FD33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C81FFEE5-C061-424B-8693-61BF3039FD33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C81FFEE5-C061-424B-8693-61BF3039FD33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{729DEE09-21D7-4B61-9594-D3B263F87FD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{729DEE09-21D7-4B61-9594-D3B263F87FD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{729DEE09-21D7-4B61-9594-D3B263F87FD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{729DEE09-21D7-4B61-9594-D3B263F87FD7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
