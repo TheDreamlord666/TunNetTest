@@ -13,7 +13,7 @@ namespace TunNet.Controllers
     public class LogController : ApiController
     {
         // NOTE: This should of course be in the application setup/configuration, wherever it is
-        private const string logFileName = @"C:\TunNetLog.txt";
+        private static string logFileName = AppDomain.CurrentDomain.BaseDirectory + @"\TunNetLog.txt";
 
         [HttpGet]
         [Route("api/log/read")]

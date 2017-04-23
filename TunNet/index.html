@@ -112,8 +112,6 @@
     function getLog() {
         $.getJSON('api/log/read')
           .done(function (data) {
-              console.log(data);
-
               var list = document.createElement('ul');
               for (var i = 0; i < data.LogEntries.length; i++) {
                   var item = document.createElement('li');
@@ -123,34 +121,6 @@
               }
               document.getElementById('logData').innerHTML = "";
               document.getElementById('logData').appendChild(list);
-          })
-          .fail(function (jqXHR, textStatus, err) {
-              $('#additionResult').text('Error: ' + err);
-          });
-    }
-
-    function getLog2() {
-        $.getJSON('api/log/read')
-          .done(function (data) {
-              console.log(data);
-              document.getElementById('logData').innerHTML = "";
-              var tr = document.createElement('tr');
-              for (var i = 0; i < data.LogEntries.length; i++) {
-                  var logEntryObj = data.LogEntries[i];
-                  var td1 = document.createElement('td');
-                  td1.appendChild(document.createTextNode(logEntryObj.Timestamp));
-                  tr.appendChild(td1);
-                  var td2 = document.createElement('td');
-                  td2.appendChild(document.createTextNode(logEntryObj.FirstParameter));
-                  tr.appendChild(td2);
-                  var td3 = document.createElement('td');
-                  td3.appendChild(document.createTextNode(logEntryObj.SecondParameter));
-                  tr.appendChild(td3);
-                  var td4 = document.createElement('td');
-                  td4.appendChild(document.createTextNode(logEntryObj.Result));
-                  tr.appendChild(td4);
-                  document.getElementById('logData').appendChild(tr);
-              }
           })
           .fail(function (jqXHR, textStatus, err) {
               $('#additionResult').text('Error: ' + err);
